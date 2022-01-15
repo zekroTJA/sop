@@ -1,7 +1,6 @@
 package sop
 
 import (
-	"fmt"
 	"math/rand"
 	"testing"
 
@@ -12,19 +11,6 @@ func TestWrap(t *testing.T) {
 	s := []int{1, 2, 3}
 	w := Wrap(s)
 	assert.Equal(t, s, w.Unwrap())
-}
-
-func TestMap(t *testing.T) {
-	w := Wrap([]int{1, 2, 3})
-
-	r := Map(w, func(v int, i int) string {
-		return fmt.Sprintf("%d: %d", i, v)
-	})
-	assert.Equal(t, r.Unwrap(), []string{"0: 1", "1: 2", "2: 3"})
-
-	assert.Panics(t, func() {
-		Map[int, int](Wrap([]int{1}), nil)
-	})
 }
 
 func TestEach(t *testing.T) {

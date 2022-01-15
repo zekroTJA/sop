@@ -20,22 +20,6 @@ func Wrap[T any](s []T) Slice[T] {
 	return Slice[T]{s}
 }
 
-// Map takes a Slice s and performs the passed function f
-// on each element of the Slice s. The return value of the
-// function f for each element is then packed into a new
-// Slice in the same order as Slice s.
-//
-// f is getting passed the value v at the given position
-// in the slice as well as the current index i.
-func Map[TIn, TOut any](s Slice[TIn], f func(v TIn, i int) TOut) Slice[TOut] {
-	notNil("f", f)
-	res := newSliceFrom[TIn, TOut](s)
-	s.Each(func(v TIn, i int) {
-		res[i] = f(v, i)
-	})
-	return Wrap(res)
-}
-
 // Unwrap returns the originaly packed
 // slice []T of the Slice[T] object.
 func (s Slice[T]) Unwrap() []T {
