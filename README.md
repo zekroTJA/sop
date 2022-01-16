@@ -8,6 +8,9 @@ Currently, the following functionalities are covered:
 - `Map`
 - `Each`
 - `Filter`
+- `Flat`
+- `Fill`
+- `Range`
 - `Any`
 - `All`
 - `None`
@@ -15,3 +18,10 @@ Currently, the following functionalities are covered:
 - `Suffle`
 - `Sort`
 - `Aggregate`
+
+Also, the following methods are available to alter slices:
+- `Push`
+- `Pop`
+- `Append`
+- `Flush`
+- `Splice`
