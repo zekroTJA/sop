@@ -183,3 +183,41 @@ func TestAggregate(t *testing.T) {
 		Wrap([]int{1}).None(nil)
 	})
 }
+
+func TestPush(t *testing.T) {
+	w := Wrap([]int{1, 2})
+	w.Push(3)
+	assert.Equal(t, []int{1, 2, 3}, w.Unwrap())
+}
+
+func TestPop(t *testing.T) {
+	w := Wrap([]int{1, 2, 3})
+	assert.Equal(t, 3, w.Pop())
+	assert.Equal(t, []int{1, 2}, w.Unwrap())
+
+	w = Wrap([]int{})
+	assert.Equal(t, 0, w.Pop())
+}
+
+func TestAppend(t *testing.T) {
+	w := Wrap([]int{1, 2})
+	w.Append(Wrap([]int{3, 4}))
+	assert.Equal(t, []int{1, 2, 3, 4}, w.Unwrap())
+
+	w = Wrap([]int{1, 2})
+	w.Append(Wrap([]int{}))
+	assert.Equal(t, []int{1, 2}, w.Unwrap())
+}
+
+func TestFlush(t *testing.T) {
+	w := Wrap([]int{1, 2})
+	w.Flush()
+	assert.Equal(t, []int{}, w.Unwrap())
+}
+
+func TestSplice(t *testing.T) {
+	w := Wrap([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+	r := w.Splice(4, 3)
+	assert.Equal(t, []int{5, 6, 7}, r.Unwrap())
+	assert.Equal(t, []int{1, 2, 3, 4, 8, 9, 10}, w.Unwrap())
+}

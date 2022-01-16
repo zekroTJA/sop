@@ -1,9 +1,7 @@
 package sop
 
 import (
-	"fmt"
 	"math/rand"
-	"reflect"
 	"sort"
 	"time"
 )
@@ -156,18 +154,40 @@ func (s Slice[T]) Aggregate(f func(a, b T) T) (c T) {
 	return
 }
 
-func notNil(name string, v interface{}) {
-	if v == nil || (reflect.ValueOf(v).IsNil()) {
-		panic(fmt.Sprintf("parameter %s can not be nil", v))
+// Push appends the passed value v to the Slice.
+func (s *Slice[T]) Push(v T) {
+	s.s = append(s.s, v)
+}
+
+// Pop removes the last element of the Slice and
+// returns its value. If the Slice is empty, the
+// default value of T is returned.
+func (s *Slice[T]) Pop() (res T) {
+	if s.Len() == 0 {
+		return
 	}
+	res = s.s[len(s.s)-1]
+	s.s = s.s[:len(s.s)-1]
+	return
 }
 
-func newSliceFrom[TIn, TOut any](s Slice[TIn]) []TOut {
-	return make([]TOut, s.Len())
+// Append adds all elements of Slice v to the
+// end of the current slice.
+func (s *Slice[T]) Append(v Slice[T]) {
+	s.s = append(s.s, v.s...)
 }
 
-func copySlice[T any](t []T) (s []T) {
-	s = make([]T, len(t))
-	copy(s, t)
+// Flush removes all elements of the given Slice.
+func (s *Slice[T]) Flush() {
+	s.s = make([]T, 0)
+}
+
+// Slice removes the values from the given slice
+// starting at i with the amount of n. The removed
+// slice is returned as new Slice.
+func (s *Slice[T]) Splice(i, n int) (res Slice[T]) {
+	t := copySlice(s.s)
+	res = Wrap(t[i : i+n])
+	s.s = append(s.s[:i], s.s[i+n:]...)
 	return
 }
