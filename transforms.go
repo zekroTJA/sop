@@ -1,5 +1,7 @@
 package sop
 
+import "constraints"
+
 // Map takes a Slice s and performs the passed function f
 // on each element of the Slice s. The return value of the
 // function f for each element is then packed into a new
@@ -32,5 +34,32 @@ func Flat[T any](s Slice[[]T]) (res Slice[T]) {
 			i++
 		}
 	})
+	return
+}
+
+// Fill creates an empty Slice[T] with the given
+// size n and executes f for each element in the
+// Slice and sets the value at the given position
+// to its return value.
+//
+// f is therefore getting passed the current
+// index i in the slice.
+func Fill[T any](n int, f func(i int) T) (res Slice[T]) {
+	notNil("f", f)
+	res = Wrap(make([]T, n))
+	for i := 0; i < n; i++ {
+		res.s[i] = f(i)
+	}
+	return
+}
+
+// Range creates an integer Slice filled with
+// sequential numbers starting with s and ending
+// with s+n-1 [n, s+n).
+func Range[T constraints.Integer](s, n T) (res Slice[T]) {
+	res = Wrap(make([]T, n))
+	for i := s; i < s+n; i++ {
+		res.s[i-s] = i
+	}
 	return
 }
