@@ -15,7 +15,7 @@ type slice[T any] struct {
 var _ Enumerable[any] = (*slice[any])(nil)
 
 // Slice packs a given slice []T into a
-// Slice[T] object.
+// *slice[T] object.
 func Slice[T any](s []T) *slice[T] {
 	return &slice[T]{s}
 }
