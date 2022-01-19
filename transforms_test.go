@@ -8,7 +8,7 @@ import (
 )
 
 func TestMap(t *testing.T) {
-	w := Wrap([]int{1, 2, 3})
+	var w Enumerable[int] = Slice([]int{1, 2, 3})
 
 	r := Map(w, func(v int, i int) string {
 		return fmt.Sprintf("%d: %d", i, v)
@@ -16,12 +16,12 @@ func TestMap(t *testing.T) {
 	assert.Equal(t, []string{"0: 1", "1: 2", "2: 3"}, r.Unwrap())
 
 	assert.Panics(t, func() {
-		Map[int, int](Wrap([]int{1}), nil)
+		Map[int, int](Slice([]int{1}), nil)
 	})
 }
 
 func TestFlat(t *testing.T) {
-	w := Wrap([][]int{
+	var w Enumerable[[]int] = Slice([][]int{
 		{1, 2, 3},
 		{4, 5},
 		{6},

@@ -11,7 +11,7 @@ func notNil(name string, v interface{}) {
 	}
 }
 
-func newSliceFrom[TIn, TOut any](s Slice[TIn]) []TOut {
+func newSliceFrom[TIn, TOut any](s Enumerable[TIn]) []TOut {
 	return make([]TOut, s.Len())
 }
 
