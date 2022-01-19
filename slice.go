@@ -96,6 +96,25 @@ func (s *slice[T]) None(p func(v T, i int) bool) bool {
 	return !s.Any(p)
 }
 
+// First returns the value and index of the first
+// occurence in the Enumerable where preticate p
+// returns true.
+//
+// If this applies to no element in the Enumerable,
+// default of T and -1 is returned.
+func (s *slice[T]) First(p func(v T, i int) bool) (rv T, ri int) {
+	ri = -1
+	s.Any(func(v T, i int) bool {
+		ok := p(v, i)
+		if ok {
+			rv = v
+			ri = i
+		}
+		return ok
+	})
+	return
+}
+
 // Count returns the number of elements in the given
 // slice which, when applied on p, return true.
 func (s *slice[T]) Count(p func(v T, i int) bool) (c int) {

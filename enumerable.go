@@ -36,6 +36,13 @@ type Enumerable[T any] interface {
 	// Enumerable result in a true return of p when performed
 	// on p.
 	None(p func(v T, i int) bool) bool
+	// First returns the value and index of the first
+	// occurence in the Enumerable where preticate p
+	// returns true.
+	//
+	// If this applies to no element in the Enumerable,
+	// default of T and -1 is returned.
+	First(p func(v T, i int) bool) (T, int)
 	// Count returns the number of elements in the given
 	// Enumerable which, when applied on p, return true.
 	Count(p func(v T, i int) bool) int

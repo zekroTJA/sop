@@ -95,6 +95,22 @@ func TestNone(t *testing.T) {
 	})
 }
 
+func TestFirst(t *testing.T) {
+	w := Slice([]int{1, 2, 3, 4, 5})
+
+	rv, ri := w.First(func(v, i int) bool {
+		return v%2 == 0
+	})
+	assert.Equal(t, 2, rv)
+	assert.Equal(t, 1, ri)
+
+	rv, ri = w.First(func(v, i int) bool {
+		return v == i
+	})
+	assert.Equal(t, 0, rv)
+	assert.Equal(t, -1, ri)
+}
+
 func TestCount(t *testing.T) {
 	w := Slice([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
 	res := w.Count(func(v, i int) bool {
