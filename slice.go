@@ -194,3 +194,29 @@ func (s *slice[T]) Splice(i, n int) (res Enumerable[T]) {
 	s.s = append(s.s[:i], s.s[i+n:]...)
 	return
 }
+
+// At safely accesses the element in the Enumerable
+// at the given index i and returns it, if existent.
+// If there is no value at i, default of T and false
+// is returned.
+func (s *slice[T]) At(i int) (v T, ok bool) {
+	if i < 0 || i >= s.Len() {
+		return
+	}
+	v = s.s[i]
+	ok = true
+	return
+}
+
+// Replace safely replaces the value in the Enumerable
+// at the given index i with the given value v and
+// returns true if the value was replaced. If the
+// Enumerable has no value at i, false is returned.
+func (s *slice[T]) Replace(i int, v T) (ok bool) {
+	if i < 0 || i >= s.Len() {
+		return
+	}
+	s.s[i] = v
+	ok = true
+	return
+}

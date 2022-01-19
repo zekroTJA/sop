@@ -40,3 +40,10 @@ func (s *set[T]) Append(v Enumerable[T]) {
 		s.Push(e)
 	})
 }
+
+func (s *set[T]) Replace(i int, v T) (ok bool) {
+	if s.Contains(v) {
+		return
+	}
+	return s.slice.Replace(i, v)
+}

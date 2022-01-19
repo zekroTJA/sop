@@ -66,4 +66,14 @@ type Enumerable[T any] interface {
 	// starting at i with the amount of n. The removed
 	// Enumerable is returned as new Enumerable.
 	Splice(i, n int) Enumerable[T]
+	// At safely accesses the element in the Enumerable
+	// at the given index i and returns it, if existent.
+	// If there is no value at i, default of T and false
+	// is returned.
+	At(i int) (T, bool)
+	// Replace safely replaces the value in the Enumerable
+	// at the given index i with the given value v and
+	// returns true if the value was replaced. If the
+	// Enumerable has no value at i, false is returned.
+	Replace(i int, v T) bool
 }

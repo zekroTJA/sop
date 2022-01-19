@@ -221,3 +221,43 @@ func TestSplice(t *testing.T) {
 	assert.Equal(t, []int{5, 6, 7}, r.Unwrap())
 	assert.Equal(t, []int{1, 2, 3, 4, 8, 9, 10}, w.Unwrap())
 }
+
+func TestAt(t *testing.T) {
+	w := Slice([]int{1, 2, 3})
+
+	v, ok := w.At(-1)
+	assert.Equal(t, 0, v)
+	assert.False(t, ok)
+
+	v, ok = w.At(3)
+	assert.Equal(t, 0, v)
+	assert.False(t, ok)
+
+	v, ok = w.At(0)
+	assert.Equal(t, 1, v)
+	assert.True(t, ok)
+
+	v, ok = w.At(2)
+	assert.Equal(t, 3, v)
+	assert.True(t, ok)
+}
+
+func TestReplace(t *testing.T) {
+	w := Slice([]int{1, 2, 3})
+
+	ok := w.Replace(-1, 4)
+	assert.Equal(t, []int{1, 2, 3}, w.Unwrap())
+	assert.False(t, ok)
+
+	ok = w.Replace(3, 4)
+	assert.Equal(t, []int{1, 2, 3}, w.Unwrap())
+	assert.False(t, ok)
+
+	ok = w.Replace(1, 4)
+	assert.Equal(t, []int{1, 4, 3}, w.Unwrap())
+	assert.True(t, ok)
+
+	ok = w.Replace(2, 5)
+	assert.Equal(t, []int{1, 4, 5}, w.Unwrap())
+	assert.True(t, ok)
+}

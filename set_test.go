@@ -33,3 +33,27 @@ func TestSetAppend(t *testing.T) {
 	s.Append(Slice([]int{7, 1, 9, 4, 5}))
 	assert.Equal(t, []int{2, 3, 1, 4, 5, 7, 9}, s.Unwrap())
 }
+
+func TestSetReplace(t *testing.T) {
+	w := Set([]int{1, 2, 3})
+
+	ok := w.Replace(-1, 4)
+	assert.Equal(t, []int{1, 2, 3}, w.Unwrap())
+	assert.False(t, ok)
+
+	ok = w.Replace(3, 4)
+	assert.Equal(t, []int{1, 2, 3}, w.Unwrap())
+	assert.False(t, ok)
+
+	ok = w.Replace(0, 2)
+	assert.Equal(t, []int{1, 2, 3}, w.Unwrap())
+	assert.False(t, ok)
+
+	ok = w.Replace(1, 4)
+	assert.Equal(t, []int{1, 4, 3}, w.Unwrap())
+	assert.True(t, ok)
+
+	ok = w.Replace(2, 5)
+	assert.Equal(t, []int{1, 4, 5}, w.Unwrap())
+	assert.True(t, ok)
+}
