@@ -2,6 +2,9 @@ package sop
 
 import "math/rand"
 
+// Enumerable specifies a wrapped slice object
+// to perform different enumerable operations
+// on.
 type Enumerable[T any] interface {
 	// Unwrap returns the originaly packed
 	// Enumerable []T of the Enumerable[T] object.
