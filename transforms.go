@@ -83,3 +83,19 @@ func Group[TVal any, TMKey comparable, TMVal any](
 	})
 	return
 }
+
+// MapFlat creates an Enumerable containing
+// key-value tuples from the given map entries.
+func MapFlat[TKey comparable, TVal any](
+	m map[TKey]TVal,
+) Enumerable[Tuple[TKey, TVal]] {
+	s := &slice[Tuple[TKey, TVal]]{
+		s: make([]Tuple[TKey, TVal], len(m)),
+	}
+	i := 0
+	for k, v := range m {
+		s.s[i] = Tuple[TKey, TVal]{k, v}
+		i++
+	}
+	return s
+}

@@ -43,6 +43,12 @@ func Group[TVal any, TMKey comparable, TMVal any](
 	f func(v TVal, i int) (TMKey, TMVal),
 ) (res map[TMKey]TMVal)
 
+// MapFlat creates an Enumerable containing
+// key-value tuples from the given map entries.
+func MapFlat[TKey comparable, TVal any](
+	m map[TKey]TVal,
+) Enumerable[Tuple[TKey, TVal]]
+
 // Enumerable specifies a wrapped slice object
 // to perform different enumerable operations
 // on.
