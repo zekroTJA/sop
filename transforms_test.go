@@ -48,7 +48,7 @@ func TestRange(t *testing.T) {
 
 func TestTransform(t *testing.T) {
 	w := Slice([]int{1, 2, 3, 2})
-	m := Group[string, int](w, func(v, i int) (mk string, mv int) {
+	m := Group[int, string, int](w, func(v, i int) (mk string, mv int) {
 		mk = strconv.Itoa(v)
 		mv = v
 		return
@@ -60,6 +60,6 @@ func TestTransform(t *testing.T) {
 	}, m)
 
 	assert.Panics(t, func() {
-		Group[int, int](Slice([]int{1}), nil)
+		Group[int, string, int](Slice([]int{1}), nil)
 	})
 }
