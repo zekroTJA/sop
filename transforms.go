@@ -66,3 +66,20 @@ func Range[T constraints.Integer](s, n T) (res Enumerable[T]) {
 	res = r
 	return
 }
+
+// Group iterates through all elements of
+// Enumerable v and adds the current value
+// v to a map with the returned key of
+// function f.
+func Group[TKey comparable, TVal any](
+	v Enumerable[TVal],
+	f func(v TVal, i int) (TKey, TVal),
+) (res map[TKey]TVal) {
+	notNil("f", f)
+	res = make(map[TKey]TVal)
+	v.Each(func(v TVal, i int) {
+		mk, mv := f(v, i)
+		res[mk] = mv
+	})
+	return
+}

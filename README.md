@@ -34,6 +34,15 @@ func Flat[T any](s Enumerable[[]T]) (res Enumerable[T])
 // with s+n-1 [n, s+n).
 func Range[T constraints.Integer](s, n T) (res Enumerable[T])
 
+// Group iterates through all elements of
+// Enumerable v and adds the current value
+// v to a map with the returned key of
+// function f.
+func Group[TKey comparable, TVal any](
+	v Enumerable[TVal],
+	f func(v TVal, i int) (TKey, TVal),
+) (res map[TKey]TVal)
+
 // Enumerable specifies a wrapped slice object
 // to perform different enumerable operations
 // on.

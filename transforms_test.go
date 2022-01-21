@@ -2,6 +2,7 @@ package sop
 
 import (
 	"fmt"
+	"strconv"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -43,4 +44,22 @@ func TestFill(t *testing.T) {
 func TestRange(t *testing.T) {
 	w := Range(3, 5)
 	assert.Equal(t, []int{3, 4, 5, 6, 7}, w.Unwrap())
+}
+
+func TestTransform(t *testing.T) {
+	w := Slice([]int{1, 2, 3, 2})
+	m := Group[string, int](w, func(v, i int) (mk string, mv int) {
+		mk = strconv.Itoa(v)
+		mv = v
+		return
+	})
+	assert.Equal(t, map[string]int{
+		"1": 1,
+		"2": 2,
+		"3": 3,
+	}, m)
+
+	assert.Panics(t, func() {
+		Group[int, int](Slice([]int{1}), nil)
+	})
 }
