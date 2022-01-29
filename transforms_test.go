@@ -46,7 +46,7 @@ func TestRange(t *testing.T) {
 	assert.Equal(t, []int{3, 4, 5, 6, 7}, w.Unwrap())
 }
 
-func TestTransform(t *testing.T) {
+func TestGroup(t *testing.T) {
 	w := Slice([]int{1, 2, 3, 2})
 	m := Group[int](w, func(v, i int) (mk string, mv int) {
 		mk = strconv.Itoa(v)
@@ -62,6 +62,32 @@ func TestTransform(t *testing.T) {
 	assert.Panics(t, func() {
 		Group[int, string, int](Slice([]int{1}), nil)
 	})
+}
+
+func TestGroupE(t *testing.T) {
+	type obj struct {
+		K string
+		V int
+	}
+
+	s := Slice([]obj{
+		{"a", 1},
+		{"a", 2},
+		{"a", 3},
+		{"b", 1},
+		{"b", 2},
+		{"c", 1},
+	})
+
+	m := GroupE[obj](s, func(v obj, i int) (string, int) {
+		return v.K, v.V
+	})
+
+	assert.Equal(t, map[string]Enumerable[int]{
+		"a": &slice[int]{[]int{1, 2, 3}},
+		"b": &slice[int]{[]int{1, 2}},
+		"c": &slice[int]{[]int{1}},
+	}, m)
 }
 
 func TestMapFlat(t *testing.T) {

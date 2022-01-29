@@ -84,6 +84,25 @@ func Group[TVal any, TMKey comparable, TMVal any](
 	return
 }
 
+// GroupE works like Group but puts re-occuring
+// keys in an enumerable value in the map.
+func GroupE[TVal any, TMKey comparable, TMVal any](
+	v Enumerable[TVal],
+	f func(v TVal, i int) (TMKey, TMVal),
+) (res map[TMKey]Enumerable[TMVal]) {
+	notNil("f", f)
+	res = make(map[TMKey]Enumerable[TMVal])
+	v.Each(func(v TVal, i int) {
+		mk, mv := f(v, i)
+		if e, ok := res[mk]; ok {
+			e.Push(mv)
+		} else {
+			res[mk] = Slice([]TMVal{mv})
+		}
+	})
+	return
+}
+
 // MapFlat creates an Enumerable containing
 // key-value tuples from the given map entries.
 func MapFlat[TKey comparable, TVal any](
