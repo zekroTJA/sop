@@ -7,7 +7,7 @@ type set[T comparable] struct {
 	*slice[T]
 }
 
-var _ Enumerable[any] = (*set[any])(nil)
+var _ Enumerable[int] = (*set[int])(nil)
 
 // Set packs a given slice []T into a
 // *set[T] object. A set acts as same as
