@@ -1,6 +1,6 @@
 package sop
 
-import "constraints"
+import "golang.org/x/exp/constraints"
 
 // Map takes a Slice s and performs the passed function f
 // on each element of the Slice s. The return value of the

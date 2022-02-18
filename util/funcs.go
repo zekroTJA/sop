@@ -1,6 +1,6 @@
 package util
 
-import "constraints"
+import "golang.org/x/exp/constraints"
 
 // Asc is a function used to sort
 // enumerables in ascending order.
